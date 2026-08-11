@@ -5,6 +5,7 @@ import com.demo.work2.Dto.LoginDTO;
 import com.demo.work2.Dto.RegisterDTO;
 import com.demo.work2.Dto.UserQueryDTO;
 import com.demo.work2.Entity.User;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,7 +13,7 @@ public interface UserService {
 void register(RegisterDTO dto);
 String login(LoginDTO dto);
 
-    void getUserList(UserQueryDTO query);
+    PageInfo<User> getUserList(UserQueryDTO query);
 
     User getUserById(Long id);
 
@@ -20,4 +21,5 @@ String login(LoginDTO dto);
 void deleteUser(Integer id);
 
     void deleteUser(Long id);
+
 }

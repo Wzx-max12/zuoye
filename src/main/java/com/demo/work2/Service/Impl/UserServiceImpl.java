@@ -10,7 +10,9 @@ import com.demo.work2.Mapper.UserMapper;
 import com.demo.work2.Service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -41,10 +43,6 @@ public class UserServiceImpl implements UserService {
         user.setStatus(1); // 默认正常
         userMapper.insert(user);
     }
-
-
-
-
     /**
      * 登录：校验用户名+MD5密码，返回UUID当作Token
      */
@@ -64,17 +62,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void getUserList(UserQueryDTO query) {
-
+    public PageInfo<User> getUserList(UserQueryDTO query) {
+        //从DTO读取前端传来的页码、每页条数
+        PageHelper.startPage(query.getPageNum(), query.getPageSize());
+        //把查询条件传入Mapper
+        List<User> userList = userMapper.getUserList(query);
+        return new PageInfo<>(userList);
     }
-
-
-
     /**
      * 分页+条件筛选
      */
-
-
     /**
      * 用户详情
      */
@@ -118,5 +115,6 @@ public class UserServiceImpl implements UserService {
         }
         userMapper.deleteById(id);
     }
+
 
 }

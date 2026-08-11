@@ -1,8 +1,8 @@
 package com.demo.work2.Mapper;
 
+import com.demo.work2.Dto.UserQueryDTO;
 import com.demo.work2.Entity.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 @Mapper
@@ -11,8 +11,7 @@ public interface UserMapper {
     User selectByUsername(String username);
     //新增用户
     int insert(User user);
-    //条件分页查询
-    List<User> selectList(@Param("username") String username, @Param("status")Integer status);
+
     //根据ID查详细
     User selectById(Long id);
     //修改
@@ -20,4 +19,5 @@ public interface UserMapper {
     //删除
     int deleteById(Long id);
 
+    List<User> getUserList(UserQueryDTO query);
 }
