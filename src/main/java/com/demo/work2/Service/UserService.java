@@ -18,7 +18,6 @@ String login(LoginDTO dto);
     User getUserById(Long id);
 
     void updateUser(User user);
-void deleteUser(Integer id);
 
     void deleteUser(Long id);
 

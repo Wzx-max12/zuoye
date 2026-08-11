@@ -67,14 +67,13 @@
 </delete>
     <select id="getUserList" resultType="User">
         select id,username,status from sys_user
-        //条件筛选
         <where>
-            //传入的username参数不能为空、也不是空白字符串
+<!--            //传入的username参数不能为空、也不是空白字符串-->
             <if test="username != null and username!=''">
-                //模糊查询，包含此关健字就匹配
+<!--                //模糊查询，包含此关健字就匹配-->
                 username like concat('%',#{username},'%')
             </if>
-            //只要status参数不为null，就拼接后面条件
+<!--            //只要status参数不为null，就拼接后面条件-->
             <if test="status != null">
                 and status = #{status}
             </if>

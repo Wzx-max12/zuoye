@@ -56,7 +56,7 @@ public class UserController {
     // 6. 删除用户 DELETE
     @DeleteMapping("/{id}")
     public Result<Void> delete(@PathVariable Long id) {
-        userService.deleteUser(Math.toIntExact(id));
+        userService.deleteUser(id);
         return Result.success();
     }
 }
