@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.work2.Mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="nickname" property="nickname"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 根据用户名查询 -->
+    <select id="selectByUsername" resultMap="BaseResultMap">
+        SELECT * FROM sys_user WHERE username = #{username}
+    </select>
+
+    <!-- 新增 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_user (username, password, nickname, phone, email, status)
+        VALUES (#{username},#{password},#{nickname},#{phone},#{email},#{status})
+    </insert>
+
+    <!-- 条件分页查询 -->
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT * FROM sys_user
+        <where>
+            <if test="username != null and username != ''">
+                username LIKE CONCAT('%',#{username},'%')
+            </if>
+            <if test="status != null">
+                status = #{status}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM sys_user WHERE id = #{id}
+    </select>
+    <!-- 修改 -->
+    <update id="updateById">
+        UPDATE sys_user
+        <set>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="status != null">status = #{status}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+<!--    &lt;!&ndash; 删除 &ndash;&gt;-->
+<!--    <delete id="deleteById">-->
+<!--        DELETE FROM sys_user WHERE id = #{id}-->
+<!--    </delete>-->
+<!--</mapper>-->
+
+<delete id="deleteById">
+    DELETE FROM sys_user WHERE id = #{id}
+</delete>
+</mapper>
+
