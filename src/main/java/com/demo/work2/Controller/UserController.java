@@ -30,12 +30,12 @@ public class UserController {
     //@Valid 自动对该对象加上校验
     public Result<String> login(@Valid @RequestBody LoginDTO dto) {
         String token = userService.login(dto);
-        
         return Result.success(token);
     }
     //3.查询用户列表（分页+条件筛选）
     @GetMapping("/page")
     public Result<PageInfo<User>> page(UserQueryDTO query){
+
         PageInfo<User> pageInfo = userService.getUserList(query);
         return Result.success(pageInfo);
     }

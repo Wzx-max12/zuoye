@@ -11,7 +11,6 @@ public interface UserMapper {
     User selectByUsername(String username);
     //新增用户
     int insert(User user);
-
     //根据ID查详细
     User selectById(Long id);
     //修改
