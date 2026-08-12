@@ -50,12 +50,12 @@ public class UserServiceImpl implements UserService {
     public String login(LoginDTO dto) {
         User dbUser = userMapper.selectByUsername(dto.getUsername());
         if (dbUser == null) {
-            throw new IllegalArgumentException("用户名不存在");
+            throw new ResourceNotFoundException("用户名不存在");
         }
         // 前端明文密码MD5加密后和库中比对
         String inputMd5 = md5Util.encrypt(dto.getPassword());
         if (!inputMd5.equals(dbUser.getPassword())) {
-            throw new IllegalArgumentException("密码错误");
+            throw new ResourceNotFoundException("密码错误");
         }
         // 简易Token：实际项目用JWT
         return UUID.randomUUID().toString().replace("-", "");
@@ -65,8 +65,11 @@ public class UserServiceImpl implements UserService {
     public PageInfo<User> getUserList(UserQueryDTO query) {
         //从DTO读取前端传来的页码、每页条数
         PageHelper.startPage(query.getPageNum(), query.getPageSize());
+        //先执行，不会触发分页
+        //User user = userMapper.selectById(1L);
         //把查询条件传入Mapper
         List<User> userList = userMapper.getUserList(query);
+        //userList是不带分页的全量数据库数据，pageInfo分页参数全部错乱ada
         return new PageInfo<>(userList);
     }
     /**
@@ -98,12 +101,6 @@ public class UserServiceImpl implements UserService {
         user.setPassword(null);
         userMapper.updateById(user);
     }
-
-    @Override
-    public void deleteUser(Integer id) {
-
-    }
-
     /**
      * 删除用户
      */
