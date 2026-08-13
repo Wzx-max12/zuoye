@@ -1,6 +1,7 @@
 package com.demo.work2.Service.Impl;
 
 import com.demo.work2.Common.ResourceNotFoundException;
+import com.demo.work2.Common.ValidateException;
 import com.demo.work2.Common.md5Util;
 import com.demo.work2.Dto.LoginDTO;
 import com.demo.work2.Dto.RegisterDTO;
@@ -50,12 +51,12 @@ public class UserServiceImpl implements UserService {
     public String login(LoginDTO dto) {
         User dbUser = userMapper.selectByUsername(dto.getUsername());
         if (dbUser == null) {
-            throw new ResourceNotFoundException("用户名不存在");
+            throw new ValidateException("用户名不存在");
         }
         // 前端明文密码MD5加密后和库中比对
         String inputMd5 = md5Util.encrypt(dto.getPassword());
         if (!inputMd5.equals(dbUser.getPassword())) {
-            throw new IllegalArgumentException("密码错误");
+            throw new ValidateException("密码错误");
         }
         // 简易Token：实际项目用JWT
         return UUID.randomUUID().toString().replace("-", "");
@@ -90,15 +91,30 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void updateUser(User user) {
+        // 1. 入参校验
+        if (user == null || user.getId() == null) {
+            throw new IllegalArgumentException("用户ID不能为空");
+        }
+
+        // 2. 查询待修改用户
         User db = userMapper.selectById(user.getId());
         if (db == null) {
             throw new ResourceNotFoundException("待修改用户不存在");
         }
-        // 禁止修改用户名和密码（如需放开自行加逻辑）
-        user.setUsername(null);
-        user.setPassword(null);
-        userMapper.updateById(user);
+        //3.禁止修改用户名
+        if (user.getUsername() != null) {
+            throw new ValidateException("用户名不可修改");
+        }
+
+        // 4. 构建更新实体（仅允许修改的字段）
+        User updateEntity = new User();
+        updateEntity.setId(user.getId());
+        updateEntity.setNickname(user.getNickname());
+        updateEntity.setPhone(user.getPhone());
+        updateEntity.setEmail(user.getEmail());
+        userMapper.updateById(updateEntity);
     }
+
     /**
      * 删除用户
      */
@@ -109,10 +125,6 @@ public class UserServiceImpl implements UserService {
             throw new ResourceNotFoundException("用户不存在，无法删除");
         }
         userMapper.deleteById(id);
-    }
-    @Override
-    public User test(String username) {
-        return userMapper.test(username);
     }
 
 }
