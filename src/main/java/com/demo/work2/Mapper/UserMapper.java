@@ -3,6 +3,7 @@ package com.demo.work2.Mapper;
 import com.demo.work2.Dto.UserQueryDTO;
 import com.demo.work2.Entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 @Mapper
@@ -18,5 +19,5 @@ public interface UserMapper {
     //删除
     int deleteById(Long id);
 
-    List<User> getUserList(UserQueryDTO query);
+    List<User> getUserList(@Param ("query")UserQueryDTO query);
 }
