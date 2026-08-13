@@ -55,12 +55,11 @@ public class UserServiceImpl implements UserService {
         // 前端明文密码MD5加密后和库中比对
         String inputMd5 = md5Util.encrypt(dto.getPassword());
         if (!inputMd5.equals(dbUser.getPassword())) {
-            throw new ResourceNotFoundException("密码错误");
+            throw new IllegalArgumentException("密码错误");
         }
         // 简易Token：实际项目用JWT
         return UUID.randomUUID().toString().replace("-", "");
     }
-
     @Override
     public PageInfo<User> getUserList(UserQueryDTO query) {
         //从DTO读取前端传来的页码、每页条数
@@ -86,7 +85,6 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
-
     /**
      * 修改用户
      */
@@ -112,6 +110,4 @@ public class UserServiceImpl implements UserService {
         }
         userMapper.deleteById(id);
     }
-
-
 }
