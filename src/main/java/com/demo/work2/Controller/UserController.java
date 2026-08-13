@@ -63,15 +63,10 @@ public class UserController {
 
     @GetMapping("/test")
     public Result<?> test(String username){
-        // 先判断账号参数非空
-        if (username == null || username.isEmpty()){
-            throw new ValidateException("账号不能为空");
-        }
         User user =userService.test(username);
         if (user == null){
             throw new ValidateException("该账户不存在");
         }
-
         return Result.success("账户校验通过，账号已查到");
     }
 
