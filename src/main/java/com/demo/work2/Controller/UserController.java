@@ -1,7 +1,7 @@
 package com.demo.work2.Controller;
 
 import com.demo.work2.Common.Result;
-import com.demo.work2.Common.ValidateException;
+
 import com.demo.work2.Dto.LoginDTO;
 import com.demo.work2.Dto.RegisterDTO;
 import com.demo.work2.Dto.UserQueryDTO;
@@ -60,17 +60,6 @@ public class UserController {
         userService.deleteUser(id);
         return Result.success();
     }
-
-    @GetMapping("/test")
-    public Result<?> test(String username){
-        User user =userService.test(username);
-        if (user == null){
-            throw new ValidateException("该账户不存在");
-        }
-        return Result.success("账号已查到");
-    }
-
-
 }
 
 
