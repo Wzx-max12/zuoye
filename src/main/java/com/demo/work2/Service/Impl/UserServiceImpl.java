@@ -1,7 +1,6 @@
 package com.demo.work2.Service.Impl;
 
 import com.demo.work2.Common.ResourceNotFoundException;
-import com.demo.work2.Common.ValidateException;
 import com.demo.work2.Common.md5Util;
 import com.demo.work2.Dto.LoginDTO;
 import com.demo.work2.Dto.RegisterDTO;
@@ -72,8 +71,8 @@ public class UserServiceImpl implements UserService {
         //userList是不带分页的全量数据库数据，pageInfo分页参数全部错乱ada
         return new PageInfo<>(userList);
     }
-    /**
-     * 分页+条件筛选
+    /*
+      分页+条件筛选
      */
     /**
      * 用户详情
