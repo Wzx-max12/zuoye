@@ -6,7 +6,7 @@ import com.demo.work2.Dto.LoginDTO;
 import com.demo.work2.Dto.RegisterDTO;
 import com.demo.work2.Dto.UserQueryDTO;
 import com.demo.work2.Entity.User;
-import com.demo.work2.Mapper.UserMapper;
+
 import com.demo.work2.Service.UserService;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
@@ -69,6 +69,7 @@ public class UserController {
         }
         return Result.success("账号已查到");
     }
+
 
 }
 

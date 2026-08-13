@@ -55,6 +55,7 @@ public Result<?> validException(ValidationException e){
         return Result.fail(404, e.getMessage());
     }
 
+
     /**
      * 全局兜底异常处理器：捕获所有未被上面规则匹配到的未知异常
      * @param e  任意Exception类型异常

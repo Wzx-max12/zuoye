@@ -21,4 +21,5 @@ public interface UserMapper {
 
     List<User> getUserList(@Param ("query")UserQueryDTO query);
     User test(String username);
+
 }
