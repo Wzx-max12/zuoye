@@ -40,8 +40,8 @@ public class GlobalExceptionHandler {
     //验证错误异常捕获
 @ExceptionHandler(ValidationException.class)
 public Result<?> validException(ValidationException e){
-        //验证失败422业务异常
-        return Result.fail(422,e.getMessage());
+        //验证失败400业务异常
+        return Result.fail(400,e.getMessage());
 }
     /**
      * 自定义资源不存在异常处理器，对应404业务异常
