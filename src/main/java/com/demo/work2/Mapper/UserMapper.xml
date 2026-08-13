@@ -77,5 +77,13 @@
         </where>
         ORDER BY id DESC
     </select>
+    <select id="test" resultType="User">
+        select * from sys_user
+        <where>
+        <if test="username != null and username.trim() != ''">
+            username = #{username}
+        </if>
+        </where>
+    </select>
 </mapper>
 

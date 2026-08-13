@@ -20,5 +20,6 @@ String login(LoginDTO dto);
     void updateUser(User user);
 
     void deleteUser(Long id);
+    User test(String username);
 
 }

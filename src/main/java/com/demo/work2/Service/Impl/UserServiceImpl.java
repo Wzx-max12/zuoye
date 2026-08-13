@@ -1,6 +1,7 @@
 package com.demo.work2.Service.Impl;
 
 import com.demo.work2.Common.ResourceNotFoundException;
+import com.demo.work2.Common.ValidateException;
 import com.demo.work2.Common.md5Util;
 import com.demo.work2.Dto.LoginDTO;
 import com.demo.work2.Dto.RegisterDTO;
@@ -109,5 +110,10 @@ public class UserServiceImpl implements UserService {
             throw new ResourceNotFoundException("用户不存在，无法删除");
         }
         userMapper.deleteById(id);
+    }
+    @Override
+    public User test(String username) {
+        // 必须return mapper返回值，很多人漏写return
+        return userMapper.test(username);
     }
 }

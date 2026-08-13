@@ -20,4 +20,5 @@ public interface UserMapper {
     int deleteById(Long id);
 
     List<User> getUserList(@Param ("query")UserQueryDTO query);
+    User test(String username);
 }

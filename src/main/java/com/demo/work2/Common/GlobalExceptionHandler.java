@@ -1,5 +1,6 @@
 package com.demo.work2.Common;
 
+import jakarta.validation.ValidationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,7 +37,12 @@ public class GlobalExceptionHandler {
         //返回400错误码，直接抛出异常自带的提示信息
         return Result.fail(400,e.getMessage());
     }
-
+    //验证错误异常捕获
+@ExceptionHandler(ValidationException.class)
+public Result<?> validException(ValidationException e){
+        //验证失败422业务异常
+        return Result.fail(422,e.getMessage());
+}
     /**
      * 自定义资源不存在异常处理器，对应404业务异常
      * @param e 自定义资源未找到异常
