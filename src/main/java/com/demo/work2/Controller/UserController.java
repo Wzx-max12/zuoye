@@ -67,7 +67,7 @@ public class UserController {
         if (user == null){
             throw new ValidateException("该账户不存在");
         }
-        return Result.success("账户校验通过，账号已查到");
+        return Result.success("账号已查到");
     }
 
 }
