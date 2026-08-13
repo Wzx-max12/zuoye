@@ -113,7 +113,6 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public User test(String username) {
-        // 必须return mapper返回值，很多人漏写return
         return userMapper.test(username);
     }
 }
