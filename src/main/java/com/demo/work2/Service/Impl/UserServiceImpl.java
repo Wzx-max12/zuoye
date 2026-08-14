@@ -5,6 +5,7 @@ import com.demo.work2.Common.ValidateException;
 import com.demo.work2.Common.md5Util;
 import com.demo.work2.Dto.LoginDTO;
 import com.demo.work2.Dto.RegisterDTO;
+import com.demo.work2.Dto.UpdateDto;
 import com.demo.work2.Dto.UserQueryDTO;
 import com.demo.work2.Entity.User;
 import com.demo.work2.Mapper.UserMapper;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
         // 1. 判断用户名是否已存在
         User exist = userMapper.selectByUsername(dto.getUsername());
         if (exist != null) {
-            throw new IllegalArgumentException("用户名已被注册");
+            throw new ValidateException("用户名已被注册");
         }
         // 2. MD5加密密码
         String md5Pwd = md5Util.encrypt(dto.getPassword());
@@ -90,28 +91,32 @@ public class UserServiceImpl implements UserService {
      * 修改用户
      */
     @Override
-    public void updateUser(User user) {
-        // 1. 入参校验
-        if (user == null || user.getId() == null) {
-            throw new IllegalArgumentException("用户ID不能为空");
+    public void updateUser(UpdateDto updateDto) {
+        // 1.入参校验
+        if (updateDto == null || updateDto.getId() == null) {
+            throw new ValidateException("用户ID不能为空");
         }
 
-        // 2. 查询待修改用户
-        User db = userMapper.selectById(user.getId());
+        // 2.查询待修改用户
+        User db = userMapper.selectById(updateDto.getId());
         if (db == null) {
             throw new ResourceNotFoundException("待修改用户不存在");
         }
-        //3.禁止修改用户名
-        if (user.getUsername() != null) {
+
+        // 3.禁止修改用户名：前端如果传username直接报错
+        if (updateDto.getUsername() != null) {
             throw new ValidateException("用户名不可修改");
         }
 
-        // 4. 构建更新实体（仅允许修改的字段）
+        //4.构建更新实体，只复制允许修改的字段
         User updateEntity = new User();
-        updateEntity.setId(user.getId());
-        updateEntity.setNickname(user.getNickname());
-        updateEntity.setPhone(user.getPhone());
-        updateEntity.setEmail(user.getEmail());
+        updateEntity.setId(updateDto.getId());
+        updateEntity.setNickname(updateDto.getNickname());
+        updateEntity.setPhone(updateDto.getPhone());
+        updateEntity.setEmail(updateDto.getEmail());
+        updateEntity.setStatus(updateDto.getStatus());
+        String md5 =md5Util.encrypt(updateDto.getPassword());
+        updateEntity.setPassword(md5);
         userMapper.updateById(updateEntity);
     }
 

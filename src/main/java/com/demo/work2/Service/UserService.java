@@ -3,6 +3,7 @@ package com.demo.work2.Service;
 
 import com.demo.work2.Dto.LoginDTO;
 import com.demo.work2.Dto.RegisterDTO;
+import com.demo.work2.Dto.UpdateDto;
 import com.demo.work2.Dto.UserQueryDTO;
 import com.demo.work2.Entity.User;
 import com.github.pagehelper.PageInfo;
@@ -17,10 +18,6 @@ String login(LoginDTO dto);
 
     User getUserById(Long id);
 
-    void updateUser(User user);
-
     void deleteUser(Long id);
-    User test(String username);
-
-
+    void updateUser(UpdateDto updateDto);
 }

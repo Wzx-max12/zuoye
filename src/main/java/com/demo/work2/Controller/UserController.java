@@ -4,6 +4,7 @@ import com.demo.work2.Common.Result;
 
 import com.demo.work2.Dto.LoginDTO;
 import com.demo.work2.Dto.RegisterDTO;
+import com.demo.work2.Dto.UpdateDto;
 import com.demo.work2.Dto.UserQueryDTO;
 import com.demo.work2.Entity.User;
 
@@ -49,8 +50,8 @@ public class UserController {
 
     // 5. 修改用户 PUT
     @PutMapping("/update")
-    public Result<Void> update(@RequestBody User user) {
-        userService.updateUser(user);
+    public Result<Void> update(@RequestBody UpdateDto updateDto) {
+        userService.updateUser(updateDto);
         return Result.success();
     }
 
