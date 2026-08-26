@@ -98,7 +98,7 @@
                     <include>**/*.xml</include>
                 </includes>
             </resource>
-            <!-- 2. 打包 resources 目录下的配置文件（✅ 新增） -->
+            <!-- 2. 打包 resources 目录下的配置文件-->
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
